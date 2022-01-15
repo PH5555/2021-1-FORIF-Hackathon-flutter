@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:forif_hackthon_flutter/pages/game.dart';
 import 'package:forif_hackthon_flutter/pages/home.dart';
 
 void main() {
@@ -9,6 +11,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]);
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -23,7 +26,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: Home(),
+      home: Game(),
     );
   }
 }
