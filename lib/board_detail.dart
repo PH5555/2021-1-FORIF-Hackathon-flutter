@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:forif_hackthon_flutter/pop_up_dialog.dart';
 
@@ -6,12 +8,14 @@ class BoardDetail extends StatelessWidget {
   final boardNumber;
   final color;
   final text;
+  final explanation;
   const BoardDetail(
       {Key? key,
       required this.position,
       required this.boardNumber,
       required this.color,
-      required this.text})
+      required this.text,
+      required this.explanation})
       : super(key: key);
 
   @override
@@ -20,10 +24,16 @@ class BoardDetail extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
+            print(explanation);
             showDialog(
                 context: context,
                 builder: (BuildContext context) {
-                  return PopUp(color: color, text: text);
+                  return PopUp(
+                    color: color,
+                    text: text,
+                    explanantion: explanation,
+                    position: boardNumber,
+                  );
                 });
           },
           child: Container(
@@ -35,7 +45,7 @@ class BoardDetail extends StatelessWidget {
                 text,
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 18,
+                    fontSize: 16,
                     color: Colors.white),
               ),
             ),
