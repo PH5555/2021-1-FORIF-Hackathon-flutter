@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:forif_hackthon_flutter/pop_up_dialog.dart';
 
 class BoardDetail extends StatelessWidget {
   final position;
@@ -17,14 +18,23 @@ class BoardDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Container(
-          width: MediaQuery.of(context).size.width / 7,
-          height: MediaQuery.of(context).size.height / 4,
-          color: color,
-          child: Center(
-            child: Text(
-              text,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+        GestureDetector(
+          onTap: () {
+            showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return PopUp(color: color, text: text);
+                });
+          },
+          child: Container(
+            width: MediaQuery.of(context).size.width / 7,
+            height: MediaQuery.of(context).size.height / 4,
+            color: color,
+            child: Center(
+              child: Text(
+                text,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              ),
             ),
           ),
         ),
