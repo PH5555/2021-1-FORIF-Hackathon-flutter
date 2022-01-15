@@ -73,7 +73,7 @@ class _PreparationRoomState extends State<PreparationRoom> {
         shrinkWrap: true,
         crossAxisCount: 6,
         children: List<Widget>.generate(participantsList.length, (idx) {
-          return Row(
+          return Column(
             children: [
               Text(participantsList[idx],
                   style: TextStyle(fontSize: 18), textAlign: TextAlign.center),
@@ -117,12 +117,14 @@ class _PreparationRoomState extends State<PreparationRoom> {
 
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: Colors.green,
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               addParticipantArea(),
+              SizedBox(height: 30),
               participantsListArea(),
               startArea()
             ],
