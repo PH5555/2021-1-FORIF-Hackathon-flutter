@@ -23,7 +23,7 @@ class _HomeState extends State<Home> {
                 SizedBox(
                   height: 50,
                 ),
-                Image.asset("imgs/homebackgrnd.jpg", width: 500),
+                Image.asset("imgs/homebackgrnd.png", width: 500),
                 SizedBox(
                   height: 20,
                 ),
