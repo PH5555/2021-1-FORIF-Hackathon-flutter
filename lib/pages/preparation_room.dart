@@ -64,34 +64,40 @@ class _PreparationRoomState extends State<PreparationRoom> {
   }
 
   Widget participantsListArea() {
-    return GridView.count(
-        padding: EdgeInsets.only(
-          left: 80,
-          right: 80,
-        ),
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        crossAxisCount: 6,
-        children: List<Widget>.generate(participantsList.length, (idx) {
-          return Column(
-            children: [
-              Text(participantsList[idx],
-                  style: TextStyle(fontSize: 18), textAlign: TextAlign.center),
-              IconButton(
-                  onPressed: () {
-                    setState(() {
-                      participantsList.removeAt(idx);
-                      print(participantsList);
-                    });
-                  },
-                  icon: Icon(
-                    Icons.person_remove,
-                    color: Colors.black,
-                    size: 20,
-                  ))
-            ],
-          );
-        }).toList());
+    return Container(
+      height: 180,
+      child: Expanded(
+        child: GridView.count(
+            padding: EdgeInsets.only(
+              left: 80,
+              right: 80,
+            ),
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            crossAxisCount: 6,
+            children: List<Widget>.generate(participantsList.length, (idx) {
+              return Column(
+                children: [
+                  Text(participantsList[idx],
+                      style: TextStyle(fontSize: 18),
+                      textAlign: TextAlign.center),
+                  IconButton(
+                      onPressed: () {
+                        setState(() {
+                          participantsList.removeAt(idx);
+                          print(participantsList);
+                        });
+                      },
+                      icon: Icon(
+                        Icons.person_remove,
+                        color: Colors.black,
+                        size: 20,
+                      ))
+                ],
+              );
+            }).toList()),
+      ),
+    );
   }
 
   Widget startArea() {
@@ -126,6 +132,7 @@ class _PreparationRoomState extends State<PreparationRoom> {
               addParticipantArea(),
               SizedBox(height: 30),
               participantsListArea(),
+              SizedBox(height: 10),
               startArea()
             ],
           ),
