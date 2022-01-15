@@ -33,7 +33,10 @@ class BoardDetail extends StatelessWidget {
             child: Center(
               child: Text(
                 text,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                    color: Colors.white),
               ),
             ),
           ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:forif_hackthon_flutter/pages/game.dart';
 import 'package:forif_hackthon_flutter/pages/home.dart';
+import 'package:forif_hackthon_flutter/pages/preparation_room.dart';
 
 void main() {
   runApp(MyApp());
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: Game(),
+      home: Home(),
     );
   }
 }

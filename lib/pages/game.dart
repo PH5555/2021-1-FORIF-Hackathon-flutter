@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:forif_hackthon_flutter/board_detail.dart';
 
 class Game extends StatefulWidget {
-  const Game({Key? key}) : super(key: key);
+  final List<String> players;
+  const Game({Key? key, required this.players}) : super(key: key);
 
   @override
   _GameState createState() => _GameState();
@@ -16,6 +17,30 @@ class _GameState extends State<Game> {
 
   int lastDiceNumber = 1;
   int position = 1;
+  List<int> strandedPeople = [];
+  int currentPerson = 0;
+
+  List<String> penalties = [
+    '',
+    'start',
+    '지하철',
+    '훈민정음',
+    '다 같이 한잔',
+    '소주 두 잔',
+    '호빵 찐빵 대빵',
+    '한 턴 쉬기',
+    '이미지 게임',
+    '두부',
+    '사약 제조',
+    '좋아 게임',
+    '손병호',
+    '나 빼고 다 마셔',
+    '공산당',
+    '랜덤 게임',
+    '사약 마시기',
+    '의리 게임',
+    '딸기가 좋아',
+  ];
 
   List<String> diceImages = [
     '',
@@ -38,22 +63,22 @@ class _GameState extends State<Game> {
                 position: position,
                 boardNumber: 16,
                 color: Colors.red,
-                text: ''),
+                text: penalties[16]),
             BoardDetail(
                 position: position,
                 boardNumber: 17,
                 color: Colors.orange,
-                text: ''),
+                text: penalties[17]),
             BoardDetail(
                 position: position,
                 boardNumber: 18,
                 color: Colors.yellow,
-                text: ''),
+                text: penalties[18]),
             BoardDetail(
                 position: position,
                 boardNumber: 1,
                 color: Colors.green,
-                text: '시작'),
+                text: penalties[1]),
           ],
         ),
         Column(
@@ -62,7 +87,7 @@ class _GameState extends State<Game> {
                 position: position,
                 boardNumber: 15,
                 color: Colors.blue,
-                text: ''),
+                text: penalties[15]),
             SizedBox(
               height: MediaQuery.of(context).size.height / 2,
             ),
@@ -70,7 +95,7 @@ class _GameState extends State<Game> {
                 position: position,
                 boardNumber: 2,
                 color: Colors.purple,
-                text: ''),
+                text: penalties[2]),
           ],
         ),
         Column(
@@ -79,7 +104,7 @@ class _GameState extends State<Game> {
                 position: position,
                 boardNumber: 14,
                 color: Colors.red,
-                text: ''),
+                text: penalties[14]),
             SizedBox(
               height: MediaQuery.of(context).size.height / 2,
             ),
@@ -87,7 +112,7 @@ class _GameState extends State<Game> {
                 position: position,
                 boardNumber: 3,
                 color: Colors.orange,
-                text: ''),
+                text: penalties[3]),
           ],
         ),
         Column(
@@ -96,7 +121,7 @@ class _GameState extends State<Game> {
                 position: position,
                 boardNumber: 13,
                 color: Colors.yellow,
-                text: ''),
+                text: penalties[13]),
             SizedBox(
               height: MediaQuery.of(context).size.height / 2,
             ),
@@ -104,7 +129,7 @@ class _GameState extends State<Game> {
                 position: position,
                 boardNumber: 4,
                 color: Colors.green,
-                text: ''),
+                text: penalties[4]),
           ],
         ),
         Column(
@@ -113,7 +138,7 @@ class _GameState extends State<Game> {
                 position: position,
                 boardNumber: 12,
                 color: Colors.blue,
-                text: ''),
+                text: penalties[12]),
             SizedBox(
               height: MediaQuery.of(context).size.height / 2,
             ),
@@ -121,7 +146,7 @@ class _GameState extends State<Game> {
                 position: position,
                 boardNumber: 5,
                 color: Colors.purple,
-                text: ''),
+                text: penalties[5]),
           ],
         ),
         Column(
@@ -130,7 +155,7 @@ class _GameState extends State<Game> {
                 position: position,
                 boardNumber: 11,
                 color: Colors.red,
-                text: ''),
+                text: penalties[11]),
             SizedBox(
               height: MediaQuery.of(context).size.height / 2,
             ),
@@ -138,7 +163,7 @@ class _GameState extends State<Game> {
                 position: position,
                 boardNumber: 6,
                 color: Colors.orange,
-                text: ''),
+                text: penalties[6]),
           ],
         ),
         Column(
@@ -147,22 +172,22 @@ class _GameState extends State<Game> {
                 position: position,
                 boardNumber: 10,
                 color: Colors.yellow,
-                text: ''),
+                text: penalties[10]),
             BoardDetail(
                 position: position,
                 boardNumber: 9,
                 color: Colors.green,
-                text: ''),
+                text: penalties[9]),
             BoardDetail(
                 position: position,
                 boardNumber: 8,
                 color: Colors.blue,
-                text: ''),
+                text: penalties[8]),
             BoardDetail(
                 position: position,
                 boardNumber: 7,
                 color: Colors.purple,
-                text: ''),
+                text: penalties[7]),
           ],
         ),
       ],
@@ -204,9 +229,33 @@ class _GameState extends State<Game> {
             Future.delayed(Duration(seconds: 1), () {
               lastDiceNumber = Random().nextInt(6) + 1;
               position += lastDiceNumber;
+              // 한 턴 쉬기 걸렸을 때 처리
+              if (position == 7) {
+                strandedPeople[currentPerson] += 1;
+              }
+
+              // 시작점을 돌 경우 처리
               if (position > 18) {
                 position -= 18;
               }
+
+              // 다음 사람 넘어가기
+              currentPerson += 1;
+
+              if (currentPerson >= widget.players.length) {
+                currentPerson = 0;
+              }
+
+              // 다음 사람이 쉬는 사람일 경우 처리
+              if (strandedPeople[currentPerson] != 0) {
+                strandedPeople[currentPerson] -= 1;
+                currentPerson += 1;
+
+                if (currentPerson >= widget.players.length) {
+                  currentPerson = 0;
+                }
+              }
+
               diceController.add(false);
               setState(() {});
             });
@@ -223,6 +272,13 @@ class _GameState extends State<Game> {
                 style:
                     TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
               ))),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Text(
+          widget.players[currentPerson] + '님 주사위를 굴려주세요!',
+          style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
         )
       ],
     );
@@ -231,6 +287,9 @@ class _GameState extends State<Game> {
   @override
   void initState() {
     diceController.add(false);
+    for (int i = 0; i < widget.players.length; i++) {
+      strandedPeople.add(0);
+    }
     super.initState();
   }
 
