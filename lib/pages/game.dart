@@ -12,6 +12,30 @@ class Game extends StatefulWidget {
   _GameState createState() => _GameState();
 }
 
+StreamController<int> penaltyController = StreamController<int>();
+
+List<String> penalties = [
+  '',
+  'start',
+  '지하철',
+  '훈민정음',
+  '다 같이 한잔',
+  '소주 두 잔',
+  '호빵 찐빵 대빵',
+  '한 턴 쉬기',
+  '이미지 게임',
+  '두부',
+  '사약 제조',
+  '좋아 게임',
+  '손병호',
+  '나 빼고 다 마셔',
+  '공산당',
+  '랜덤 게임',
+  '사약 마시기',
+  '의리 게임',
+  '딸기가 좋아',
+];
+
 class _GameState extends State<Game> {
   StreamController<bool> diceController = StreamController<bool>();
 
@@ -19,28 +43,6 @@ class _GameState extends State<Game> {
   int position = 1;
   List<int> strandedPeople = [];
   int currentPerson = 0;
-
-  List<String> penalties = [
-    '',
-    'start',
-    '지하철',
-    '훈민정음',
-    '다 같이 한잔',
-    '소주 두 잔',
-    '호빵 찐빵 대빵',
-    '한 턴 쉬기',
-    '이미지 게임',
-    '두부',
-    '사약 제조',
-    '좋아 게임',
-    '손병호',
-    '나 빼고 다 마셔',
-    '공산당',
-    '랜덤 게임',
-    '사약 마시기',
-    '의리 게임',
-    '딸기가 좋아',
-  ];
 
   List<String> diceImages = [
     '',
@@ -50,6 +52,28 @@ class _GameState extends State<Game> {
     'imgs/dice_4.png',
     'imgs/dice_5.png',
     'imgs/dice_6.png',
+  ];
+
+  List<String> explanations = [
+    '',
+    '시작점입니다!',
+    '처음 시작하는 사람은 2호선, 7호선 등 지하철 노선 중 하나를 정한 후, 왼쪽으로 돌아가며 차례대로 그 노선에 속한 역의 이름을 말하면 됩니당~ 만약 이전 사람이 외친 지하철역이 환승역인 경우엔 환승역이 속한 다른 노선으로 변경이 가능합니당 예를 들어 앞사람이 "선릉"을 외쳤다면, 그 다음 사람은 분당선의 역 이름을 말해도 됩니다!',
+    '처음 시작하는 사람은 엄지손가락을 내밀며 초성 문제를 냅니다! 주어진 초성이 들어간 단어를 말하며 엄지손가락을 빠르게 잡아주세용~ 단어를 생각하지 못하거나, 다른 사람과 동일한 단어를 외치거나, 다른 사람보다 한 발 늦어 엄지손가락을 잡지 못하면 벌주에 당첨됩니당',
+    '마셔마셔',
+    '마셔마셔',
+    '처음 시작하는 사람은 공격할 사람을 정해 지목을 하며 "호! 찐! 빵!" 중 한가지를 골라 외칩니당 만약 "호!"에 지목을 당했다면, 지목 당한 사람이 두 손을 들며 "빵!"을 크게 외칩니다. 그리고 다시 "호! 찐! 대! 중 하나를 골라 외치며 공격할 사람을 지목합니당 "찐!"으로 지목을 받았다면, 지목 당한 사람은 가만히 있고 지목을 당한 사람의 양 옆 사람이 두 손을 들며 "빵!"을 외칩니다. "대!"로 지목을 받았다면, 모든 사람이 "빵!"을 외치며 두 손을 올립니다. "빵"을 엉뚱하게 외치면 벌주',
+    '걸린 사람은 한 턴 쉬기!',
+    '이미지 게임',
+    '두부',
+    '사약 제조하기!',
+    '좋아 게임',
+    '손병호 게임',
+    '나 빼고 다 마시기!',
+    '',
+    '랜덤 게임!',
+    '사약 마시기!!',
+    '의리 게임',
+    '딸기가 좋아',
   ];
 
   Widget gameBoard() {
@@ -63,22 +87,26 @@ class _GameState extends State<Game> {
                 position: position,
                 boardNumber: 16,
                 color: Colors.red,
-                text: penalties[16]),
+                text: penalties[16],
+                explanation: explanations[16]),
             BoardDetail(
                 position: position,
                 boardNumber: 17,
                 color: Colors.orange,
-                text: penalties[17]),
+                text: penalties[17],
+                explanation: explanations[17]),
             BoardDetail(
                 position: position,
                 boardNumber: 18,
                 color: Colors.yellow,
-                text: penalties[18]),
+                text: penalties[18],
+                explanation: explanations[18]),
             BoardDetail(
                 position: position,
                 boardNumber: 1,
                 color: Colors.green,
-                text: penalties[1]),
+                text: penalties[1],
+                explanation: explanations[1]),
           ],
         ),
         Column(
@@ -87,7 +115,8 @@ class _GameState extends State<Game> {
                 position: position,
                 boardNumber: 15,
                 color: Colors.blue,
-                text: penalties[15]),
+                text: penalties[15],
+                explanation: explanations[15]),
             SizedBox(
               height: MediaQuery.of(context).size.height / 2,
             ),
@@ -95,7 +124,8 @@ class _GameState extends State<Game> {
                 position: position,
                 boardNumber: 2,
                 color: Colors.purple,
-                text: penalties[2]),
+                text: penalties[2],
+                explanation: explanations[2]),
           ],
         ),
         Column(
@@ -104,7 +134,8 @@ class _GameState extends State<Game> {
                 position: position,
                 boardNumber: 14,
                 color: Colors.red,
-                text: penalties[14]),
+                text: penalties[14],
+                explanation: explanations[14]),
             SizedBox(
               height: MediaQuery.of(context).size.height / 2,
             ),
@@ -112,7 +143,8 @@ class _GameState extends State<Game> {
                 position: position,
                 boardNumber: 3,
                 color: Colors.orange,
-                text: penalties[3]),
+                text: penalties[3],
+                explanation: explanations[3]),
           ],
         ),
         Column(
@@ -121,7 +153,8 @@ class _GameState extends State<Game> {
                 position: position,
                 boardNumber: 13,
                 color: Colors.yellow,
-                text: penalties[13]),
+                text: penalties[13],
+                explanation: explanations[13]),
             SizedBox(
               height: MediaQuery.of(context).size.height / 2,
             ),
@@ -129,7 +162,8 @@ class _GameState extends State<Game> {
                 position: position,
                 boardNumber: 4,
                 color: Colors.green,
-                text: penalties[4]),
+                text: penalties[4],
+                explanation: explanations[4]),
           ],
         ),
         Column(
@@ -138,7 +172,8 @@ class _GameState extends State<Game> {
                 position: position,
                 boardNumber: 12,
                 color: Colors.blue,
-                text: penalties[12]),
+                text: penalties[12],
+                explanation: explanations[12]),
             SizedBox(
               height: MediaQuery.of(context).size.height / 2,
             ),
@@ -146,7 +181,8 @@ class _GameState extends State<Game> {
                 position: position,
                 boardNumber: 5,
                 color: Colors.purple,
-                text: penalties[5]),
+                text: penalties[5],
+                explanation: explanations[5]),
           ],
         ),
         Column(
@@ -155,7 +191,8 @@ class _GameState extends State<Game> {
                 position: position,
                 boardNumber: 11,
                 color: Colors.red,
-                text: penalties[11]),
+                text: penalties[11],
+                explanation: explanations[11]),
             SizedBox(
               height: MediaQuery.of(context).size.height / 2,
             ),
@@ -163,7 +200,8 @@ class _GameState extends State<Game> {
                 position: position,
                 boardNumber: 6,
                 color: Colors.orange,
-                text: penalties[6]),
+                text: penalties[6],
+                explanation: explanations[6]),
           ],
         ),
         Column(
@@ -172,22 +210,26 @@ class _GameState extends State<Game> {
                 position: position,
                 boardNumber: 10,
                 color: Colors.yellow,
-                text: penalties[10]),
+                text: penalties[10],
+                explanation: explanations[10]),
             BoardDetail(
                 position: position,
                 boardNumber: 9,
                 color: Colors.green,
-                text: penalties[9]),
+                text: penalties[9],
+                explanation: explanations[9]),
             BoardDetail(
                 position: position,
                 boardNumber: 8,
                 color: Colors.blue,
-                text: penalties[8]),
+                text: penalties[8],
+                explanation: explanations[8]),
             BoardDetail(
                 position: position,
                 boardNumber: 7,
                 color: Colors.purple,
-                text: penalties[7]),
+                text: penalties[7],
+                explanation: explanations[7]),
           ],
         ),
       ],
@@ -287,6 +329,7 @@ class _GameState extends State<Game> {
   @override
   void initState() {
     diceController.add(false);
+    penaltyController.add(0);
     for (int i = 0; i < widget.players.length; i++) {
       strandedPeople.add(0);
     }
@@ -296,9 +339,20 @@ class _GameState extends State<Game> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [gameBoard(), Center(child: diceArea())],
-      ),
+      resizeToAvoidBottomInset: false,
+      body: StreamBuilder<int>(
+          stream: penaltyController.stream,
+          builder: (context, AsyncSnapshot<int> snapshot) {
+            if (snapshot.hasData) {
+              explanations[snapshot.data!] = '';
+              print(penalties);
+              return Stack(
+                children: [gameBoard(), Center(child: diceArea())],
+              );
+            } else {
+              return Container();
+            }
+          }),
     );
   }
 }

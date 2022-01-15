@@ -6,12 +6,14 @@ class BoardDetail extends StatelessWidget {
   final boardNumber;
   final color;
   final text;
+  final explanation;
   const BoardDetail(
       {Key? key,
       required this.position,
       required this.boardNumber,
       required this.color,
-      required this.text})
+      required this.text,
+      required this.explanation})
       : super(key: key);
 
   @override
@@ -23,7 +25,12 @@ class BoardDetail extends StatelessWidget {
             showDialog(
                 context: context,
                 builder: (BuildContext context) {
-                  return PopUp(color: color, text: text);
+                  return PopUp(
+                    color: color,
+                    text: text,
+                    explanantion: explanation,
+                    position: boardNumber,
+                  );
                 });
           },
           child: Container(
